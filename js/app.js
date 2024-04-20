@@ -6,6 +6,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     $scope.showClientiEmpty = false;
     $scope.editDataFlag = false;
     $scope.updateCliente = false;
+    $scope.showRitiroCapi = false;
 
     $scope.getFlagForForm = function(){
         $scope.showForm = !$scope.showForm;
@@ -86,6 +87,31 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
                 console.log('Data received:', response.data);
                 $scope.apiData = response.data;
                 $scope.showClientiEmpty = !$scope.showClientiEmpty;
+                if($scope.showForm){
+                    $scope.showForm = !$scope.showForm;
+                }
+                if($scope.editDataFlag){
+                    $scope.editDataFlag = !$scope.editDataFlag;
+                }
+                if($scope.updateCliente){
+                    $scope.updateCliente = !$scope.updateCliente;
+                }
+            }, function(error) {
+                console.error('Error fetching data:', error);
+            });
+    };
+    $scope.getCliente = function(idCliente, nome, cognome) {
+        $http.get('http://192.168.1.228:8080/lavanderia/cliente', {
+            params:{
+                idCliente: idCliente,
+                nome: nome,
+                cognome: cognome
+            }
+        })
+            .then(function(response) {
+                console.log('Data received:', response.data);
+                $rootScope.apiData = response.data;
+                $scope.showRitiroCapi = !$scope.showRitiroCapi;
                 if($scope.showForm){
                     $scope.showForm = !$scope.showForm;
                 }

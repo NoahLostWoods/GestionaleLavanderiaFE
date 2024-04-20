@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Search Bar with Table</title>
 <style>
   /* Stili per la tabella */
   table {
@@ -45,33 +44,21 @@
 </style>
 </head>
 <body>
-
-<div class="search-container">
-  <div class="search-icon" ng-click="toggleSearch()" ng-show="apiData !== null && apiData.length > 0 && showClientiEmpty && !showRitiroCapi">
-    <img src="../icons/search.ico" alt="Search Icon">
-  </div>
-  <input type="text" class="search-input" ng-model="searchText" placeholder="Cerca per nome...">
-</div>
-
-<table border="1" align="center" ng-show="apiData !== null && apiData.length > 0 && showClientiEmpty && !showRitiroCapi">
+<table border="1" align="center" ng-show="showRitiroCapi">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Nome</th>
-      <th>Cognome</th>
-      <th>Indirizzo</th>
-      <th>Telefono</th>
+      <th>Descrizione</th>
+      <th>Nome capo</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="item in apiData | filter:searchText">
-      <td>{{item.idCliente}}</td>
-      <td>{{item.nome}}</td>
-      <td>{{item.cognome}}</td>
-      <td>{{item.indirizzo}}</td>
-      <td>{{item.numeroDiTelefono}}</td>
-      <td><button ng-click="getCliente(item.idCliente, item.nome, item.cognome)">RITIRO</button></td>
+    <tr ng-repeat="item in apiData[0].capi">
+      <td>{{item.idCapo}}</td>
+      <td>{{item.descrizione}}</td>
+      <td>{{item.nomeCapo}}</td>
+      <td><button>RITIRO</button></td>
     </tr>
   </tbody>
 </table>
