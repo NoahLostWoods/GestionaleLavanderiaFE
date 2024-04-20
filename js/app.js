@@ -110,7 +110,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
         })
             .then(function(response) {
                 console.log('Data received:', response.data);
-                $rootScope.apiData = response.data;
+                $scope.apiData = response.data;
                 $scope.showRitiroCapi = !$scope.showRitiroCapi;
                 if($scope.showForm){
                     $scope.showForm = !$scope.showForm;
