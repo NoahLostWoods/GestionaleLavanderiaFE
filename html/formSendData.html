@@ -7,49 +7,50 @@
 </head>
 <body>
     <div class="search-container">
-  <div class="search-icon" ng-click="toggleSearch()" ng-show="showForm">
-    <img src="../icons/search.ico" alt="Search Icon">
-  </div>
-  <input type="text" class="search-input" ng-model="searchText" placeholder="Cerca per nome...">
-</div>
-
-<table border="1" align="center" ng-show="showForm">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Cognome</th>
-      <th>Indirizzo</th>
-      <th>Telefono</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="item in datiClienti | filter:searchText">
-      <td>{{item.idCliente}}</td>
-      <td>{{item.nome}}</td>
-      <td>{{item.cognome}}</td>
-      <td>{{item.indirizzo}}</td>
-      <td>{{item.numeroDiTelefono}}</td>
-    </tr>
-  </tbody>
-</table>
-
-<pre>{{ item | json }}</pre>
-<div class="form-container" ng-show="showForm">
-    <form id="formSendData" ng-submit="sendCapi($scope.idCliente, formData)" ng-show="showForm">
-
-        <div class="form-group">
-            <input type="text" id="nomeCapo" class="form-control" ng-model="formData.nomeCapo" placeholder="Nome capo"required>
+        <div class="search-icon" ng-click="toggleSearch()" ng-show="showForm">
+            <img src="../icons/search.ico" alt="Search Icon">
         </div>
+        <input type="text" class="search-input" ng-model="searchText" placeholder="Cerca per nome...">
+    </div>
 
-        <div class="form-group">
-            <input type="text" id="descrizione" class="form-control" ng-model="formData.descrizione" placeholder="Descrizione" required>
-        </div>
+    <table border="1" align="center" ng-show="showForm">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Indirizzo</th>
+                <th>Telefono</th>
+                <th>Seleziona</th> <!-- Aggiunta della nuova colonna per il radio button -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in datiClienti | filter:searchText">
+                <td>{{item.idCliente}}</td>
+                <td>{{item.nome}}</td>
+                <td>{{item.cognome}}</td>
+                <td>{{item.indirizzo}}</td>
+                <td>{{item.numeroDiTelefono}}</td>
+                <td><input type="radio" name="clienteRadio" ng-model="selectedClient" ng-value="item.idCliente"></td> <!-- Radio button -->
+            </tr>
+        </tbody>
+    </table>
 
-        <button type="submit" class="btn btn-primary">Invia</button>
-    </form>
-</div>
+    <pre>{{ item | json }}</pre>
+
+    <div class="form-container" ng-show="showForm">
+        <form id="formSendData" ng-submit="sendCapi(selectedClient, formData)" ng-show="showForm">
+
+            <div class="form-group">
+                <input type="text" id="nomeCapo" class="form-control" ng-model="formData.nomeCapo" placeholder="Nome capo" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="descrizione" class="form-control" ng-model="formData.descrizione" placeholder="Descrizione" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Invia</button>
+        </form>
+    </div>
 </body>
 </html>
-
