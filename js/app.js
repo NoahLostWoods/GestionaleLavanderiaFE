@@ -19,6 +19,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
         if($scope.updateCliente){
             $scope.updateCliente = !$scope.updateCliente;
         }
+        $scope.getDataForPresaInCarico();
     };
 
     $scope.showFormUpdateCliente = function(idCliente){
@@ -100,6 +101,17 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
                 console.error('Error fetching data:', error);
             });
     };
+
+    $scope.getDataForPresaInCarico = function() {
+        $http.get('http://192.168.1.228:8080/lavanderia/clienti')
+            .then(function(response) {
+                console.log('Data received:', response.data);
+                $scope.datiClienti = response.data;
+                $scope.showClientiEmpty = !$scope.showClientiEmpty;
+            }, function(error) {
+                console.error('Error fetching data:', error);
+            });
+    };
     $scope.getCliente = function(idCliente, nome, cognome) {
         $http.get('http://192.168.1.228:8080/lavanderia/cliente', {
             params:{
@@ -137,15 +149,27 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     };
 
 
-        $scope.sendData = function() {
-            $http.post('http://192.168.1.228:8080/lavanderia/cliente', $scope.formData)
-                .then(function(response) {
-                console.log('Data sent successfully:', response.data);
-                $window.location.reload();
-            })
-            .catch(function(error) {
-                console.error('Error sending data:', error);
-            });
+    $scope.sendData = function() {
+        $http.post('http://192.168.1.228:8080/lavanderia/cliente', $scope.formData)
+            .then(function(response) {
+            console.log('Data sent successfully:', response.data);
+            $window.location.reload();
+        })
+        .catch(function(error) {
+            console.error('Error sending data:', error);
+        });
+    };
+
+    $scope.sendCapi = function(idCliente, capoDto){
+    data = {nomeCapo:capoDto.nomeCapo, 
+            descrizione:capoDto.descrizione};
+        $http.put('http://192.168.1.228:8080/lavanderia/cliente/capo/' + idCliente, JSON.stringify(data))
+        .then(function(response){
+            location.reload();
+            console.log('Capo inserito con successo')
+        }, function(error){
+            console.error('Caricamento del capo fallito: ', error);
+        });
     };
 });
 
