@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestionale Lavanderia</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="../js/app.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .menu-btn {
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body ng-controller="myController">
+  <!-- Barra di navigazione -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a href="/lavanderia1.0/html/index1.html" class="navbar-brand">Gestionale Lavanderia</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item mr-2">
+          <button ng-click="getData()" class="btn btn-outline-light menu-btn" id="lista-clienti-btn">Lista Clienti</button>
+        </li><br>
+        <!-- Aggiunta della classe "mr-2" per aggiungere spazio tra i due bottoni -->
+        <li class="nav-item mr-2">
+          <button ng-click="getFlagForForm()" class="btn btn-outline-light menu-btn" id="inserimento-cliente-btn">Inserimento Cliente</button>
+        </li>
+        <li class="nav-item mr-2">
+          <button ng-click="" class="btn btn-outline-light menu-btn" id="ritiro-btn">Ritiro</button>
+        </li>
+        <li class="nav-item mr-2">
+          <button ng-click="" class="btn btn-outline-light menu-btn" id="consegna-al-cliente-btn">Consegna</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenitore principale -->
+  <div class="container mt-5">
+    <div ng-hide="apiData !== null && apiData.length > 0 && showClientiEmpty" class="jumbotron">
+      <h1 class="display-4">Benvenuto nel Gestionale Lavanderia</h1>
+      <p class="lead">Un sistema intuitivo per gestire gli ordini e i clienti della tua lavanderia.</p>
+      <hr class="my-4">
+      <p>Usa il menu di navigazione per accedere alle diverse sezioni.</p>
+    </div>
+      <div ng-include="'formSendData.html'"></div>
+      <div ng-include="'tableListaClienti.html'"></div>
+      <div ng-include="'updateClienti.html'"></div>
+      <div ng-show="apiData.length === 0 && showClientiEmpty">Lista clienti vuota</div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

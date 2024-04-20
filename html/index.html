@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lavanderia Maione</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="../js/app.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body ng-controller="myController">
+  <!-- Barra di navigazione -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a href="index.html" class="navbar-brand">Lavanderia Maione</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <div class="center-screen">
+          <button ng-click="getData()" class="btn btn-outline-dark menu-btn btn-xl mr-2" id="ritiro-cliente-btn" ng-hide="showForm || apiData !== null && apiData.length > 0 && showClientiEmpty">Ritiro dal cliente</button>
+          <button ng-click="getFlagForForm()" class="btn btn-outline-dark menu-btn btn-xl" id="presa-in-carico-btn" ng-hide="showForm || apiData !== null && apiData.length > 0 && showClientiEmpty">Presa in carico</button>
+        </div>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenitore principale -->
+  <div class="container mt-5">
+      <div ng-include="'formSendData.html'"></div>
+      <div ng-include="'tableRitiro.html'"></div>
+      <div ng-include="'updateClienti.html'"></div>
+      <div ng-show="apiData.length === 0 && showClientiEmpty">Lista clienti vuota</div>
+  </div>
+</body>
+</html>
+

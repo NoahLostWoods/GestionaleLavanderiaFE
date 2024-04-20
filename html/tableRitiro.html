@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Bar with Table</title>
+<style>
+  /* Stili per la tabella */
+  table {
+      border-collapse: separate;
+      border-spacing: 5px;
+      border: 2px solid #000; /* Spessore del bordo esterno */
+      border-radius: 10px; /* Bordi arrotondati */
+      margin: 0 auto; /* Centra la tabella */
+  }
+
+  th, td {
+      border: 1px solid #000; /* Spessore del bordo interno */
+      padding: 8px; /* Spazio interno */
+  }
+
+  /* Stile per il bottone */
+  button {
+      border: 2px solid #000; /* Spessore del bordo del bottone */
+      border-radius: 5px; /* Bordi arrotondati del bottone */
+      padding: 5px 10px; /* Spaziatura interna del bottone */
+      background-color: #f0f0f0; /* Colore di sfondo del bottone */
+  }
+
+  .search-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .search-icon {
+    cursor: pointer;
+  }
+
+  .search-input {
+    display: none;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="search-container">
+  <div class="search-icon" ng-click="toggleSearch()" ng-show="apiData !== null && apiData.length > 0 && showClientiEmpty">
+    <img src="../icons/search.ico" alt="Search Icon">
+  </div>
+  <input type="text" class="search-input" ng-model="searchText" placeholder="Cerca per nome...">
+</div>
+
+<table border="1" align="center" ng-show="apiData !== null && apiData.length > 0 && showClientiEmpty">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Cognome</th>
+      <th>Indirizzo</th>
+      <th>Telefono</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in apiData | filter:searchText">
+      <td>{{item.idCliente}}</td>
+      <td>{{item.nome}}</td>
+      <td>{{item.cognome}}</td>
+      <td>{{item.indirizzo}}</td>
+      <td>{{item.numeroDiTelefono}}</td>
+      <td><button>RITIRO</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<pre>{{ item | json }}</pre>
+</body>
+</html>
+

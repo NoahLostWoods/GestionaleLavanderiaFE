@@ -1,0 +1,15 @@
+<form id="formUpdateData" ng-submit="updateData(formData)" ng-show="updateCliente">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" ng-value="Valerio" ng-model="formData.nome">
+
+        <label for="cognome">Cognome:</label>
+        <input type="text" id="cognome" ng-model="formData.cognome">
+
+        <label for="indirizzo">Indirizzo:</label>
+        <input type="text" id="indirizzo" ng-model="formData.indirizzo">
+        
+        <label for="telefono">Numero di telefono:</label>
+        <input type="text" id="telefono" ng-model="formData.numeroDiTelefono">
+
+        <button type="submit">Invia</button>
+    </form>

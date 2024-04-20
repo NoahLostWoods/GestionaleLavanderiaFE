@@ -1,0 +1,68 @@
+.form-container {
+    border: 2px solid #ccc; /* Contorno spesso */
+    padding: 20px; /* Spaziatura interna */
+    border-radius: 10px; /* Angoli arrotondati */
+    background-color: #f9f9f9; /* Colore di sfondo */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Spaziatura tra gruppi di campi */
+}
+
+label {
+    font-weight: bold; /* Testo in grassetto */
+}
+
+.form-control {
+    width: 100%; /* Occupa tutta la larghezza disponibile */
+    padding: 10px; /* Spaziatura interna */
+    border: 1px solid #ccc; /* Bordo sottile */
+    border-radius: 5px; /* Angoli arrotondati */
+    box-sizing: border-box; /* Considera il bordo e il padding nel calcolo della larghezza */
+}
+
+/* CSS nel file style.css */
+.btn {
+    padding: 10px 20px;
+    border: 2px solid #000; /* Bordo nero */
+    border-radius: 5px;
+    background-color: #fff; /* Sfondo bianco */
+    color: #000; /* Testo nero */
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: black; /* Cambia il colore di sfondo al passaggio del mouse */
+    color: #fff; /* Cambia il colore del testo al passaggio del mouse */
+}
+
+.menu-btn {
+  color: #000000; /* Testo nero */
+}
+
+/* Personalizzazione per i pulsanti al centro dello schermo */
+.center-screen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Personalizzazione per i pulsanti grandi */
+.btn-xl {
+  font-size: 2.5rem;
+  padding: 20px 40px;
+}
+
+/* Stili per centrare l'intestazione del sito */
+.header-container {
+  text-align: center;
+}
+
+/* Personalizzazione per centrare il testo nella navbar-brand */
+.navbar-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
