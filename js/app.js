@@ -2,6 +2,7 @@
 
 app.controller('myController', function($scope, $rootScope, $http, $location) {
     $scope.formData = {};
+    $scope.capi = [];
     $scope.showForm = false;
     $scope.showClientiEmpty = false;
     $scope.editDataFlag = false;
@@ -160,16 +161,18 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
         });
     };
 
-    $scope.sendCapi = function(idCliente, capoDto){
-    data = {nomeCapo:capoDto.nomeCapo, 
-            descrizione:capoDto.descrizione};
-        $http.put('http://192.168.1.228:8080/lavanderia/cliente/capo/' + idCliente, JSON.stringify(data))
+    $scope.sendCapi = function(){
+        $http.post('http://192.168.1.228:8080/lavanderia/cliente/capo/' + $scope.capi[0].selectedClient, JSON.stringify($scope.capi))
         .then(function(response){
             location.reload();
             console.log('Capo inserito con successo')
         }, function(error){
             console.error('Caricamento del capo fallito: ', error);
         });
+    };
+
+    $scope.aggiungiCapo = function(capoDto){
+        $scope.capi.push(angular.copy(capoDto));
     };
 });
 

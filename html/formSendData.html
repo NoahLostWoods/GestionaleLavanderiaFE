@@ -31,7 +31,7 @@
                 <td>{{item.cognome}}</td>
                 <td>{{item.indirizzo}}</td>
                 <td>{{item.numeroDiTelefono}}</td>
-                <td><input type="radio" name="clienteRadio" ng-model="selectedClient" ng-value="item.idCliente"></td> <!-- Radio button -->
+                <td><input type="radio" name="clienteRadio" ng-model="formData.selectedClient" ng-value="item.idCliente"></td> <!-- Radio button -->
             </tr>
         </tbody>
     </table>
@@ -39,7 +39,7 @@
     <pre>{{ item | json }}</pre>
 
     <div class="form-container" ng-show="showForm">
-        <form id="formSendData" ng-submit="sendCapi(selectedClient, formData)" ng-show="showForm">
+        <form id="formSendData" ng-submit="sendCapi(formData)" ng-show="showForm">
 
             <div class="form-group">
                 <input type="text" id="nomeCapo" class="form-control" ng-model="formData.nomeCapo" placeholder="Nome capo" required>
@@ -49,6 +49,7 @@
                 <input type="text" id="descrizione" class="form-control" ng-model="formData.descrizione" placeholder="Descrizione" required>
             </div>
 
+            <button type="button" class="btn btn-primary" ng-click="aggiungiCapo(formData)">Aggiungi Capo</button>
             <button type="submit" class="btn btn-primary">Invia</button>
         </form>
     </div>
