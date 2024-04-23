@@ -31,9 +31,24 @@ label {
     cursor: pointer;
 }
 
+.btn-cliente {
+    padding: 10px 11px;
+    border: 2px solid #000; /* Bordo nero */
+    border-radius: 5px;
+    background-color: #fff; /* Sfondo bianco */
+    color: #000; /* Testo nero */
+    cursor: pointer;
+}
+
 .btn:hover {
     background-color: black; /* Cambia il colore di sfondo al passaggio del mouse */
     color: #fff; /* Cambia il colore del testo al passaggio del mouse */
+}
+
+.btn:disabled {
+    color: #fff;
+    background-color: grey;
+    border-color: black;
 }
 
 .menu-btn {
@@ -66,3 +81,6 @@ label {
   align-items: center;
 }
 
+.aggiungi-cliente-container {
+    align-items: center;
+}

@@ -1,0 +1,29 @@
+<div>
+        <table border="1" align="center" ng-show="apiData !== null && apiData.length > 0 && showClientiEmpty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Indirizzo</th>
+                <th>Telefono</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in apiData">
+                <td>{{item.idCliente}}</td>
+                <td>{{item.nome}}</td>
+                <td>{{item.cognome}}</td>
+                <td>{{item.indirizzo}}</td>
+                <td>{{item.numeroDiTelefono}}</td>
+                <td><button ng-click="deleteData(item.idCliente)">X</button></td>
+                <td><button ng-click="showFormUpdateCliente(item.idCliente)">E</button></td>
+                <td><button ng-click="printEtichettaCliente(item.idCliente)">P</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <pre>{{ item | json }}</pre>
+    </div>

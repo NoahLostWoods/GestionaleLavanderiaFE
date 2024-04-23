@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  /* Stili per la tabella */
+  table {
+      border-collapse: separate;
+      border-spacing: 5px;
+      border: 2px solid #000; /* Spessore del bordo esterno */
+      border-radius: 10px; /* Bordi arrotondati */
+      margin: 0 auto; /* Centra la tabella */
+  }
+
+  th, td {
+      border: 1px solid #000; /* Spessore del bordo interno */
+      padding: 8px; /* Spazio interno */
+  }
+
+  /* Stile per il bottone */
+  button {
+      border: 2px solid #000; /* Spessore del bordo del bottone */
+      border-radius: 5px; /* Bordi arrotondati del bottone */
+      padding: 5px 10px; /* Spaziatura interna del bottone */
+      background-color: #f0f0f0; /* Colore di sfondo del bottone */
+  }
+
+  .search-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .search-icon {
+    cursor: pointer;
+  }
+
+  .search-input {
+    display: none;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+<table border="1" align="center" ng-show="showRitiroCapi">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Descrizione</th>
+      <th>Nome capo</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in apiData[0].capi">
+      <td>{{item.idCapo}}</td>
+      <td>{{item.descrizione}}</td>
+      <td>{{item.nomeCapo}}</td>
+      <td><button>RITIRO</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<pre>{{ item | json }}</pre>
+</body>
+</html>
+

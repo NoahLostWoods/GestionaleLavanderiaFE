@@ -3,11 +3,14 @@
 app.controller('myController', function($scope, $rootScope, $http, $location) {
     $scope.formData = {};
     $scope.capi = [];
+    $scope.datiSenzaSelectedClient = [];
+    $scope.idCliente;
     $scope.showForm = false;
     $scope.showClientiEmpty = false;
     $scope.editDataFlag = false;
     $scope.updateCliente = false;
     $scope.showRitiroCapi = false;
+    $scope.aggiungiCapoFlag = true;
 
     $scope.getFlagForForm = function(){
         $scope.showForm = !$scope.showForm;
@@ -162,17 +165,64 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     };
 
     $scope.sendCapi = function(){
-        $http.post('http://192.168.1.228:8080/lavanderia/cliente/capo/' + $scope.capi[0].selectedClient, JSON.stringify($scope.capi))
-        .then(function(response){
-            location.reload();
-            console.log('Capo inserito con successo')
-        }, function(error){
-            console.error('Caricamento del capo fallito: ', error);
-        });
+        $scope.preparazioneDelDato();
+        var config = {
+            transformResponse: function(data, headers) {
+            // Verifica se la risposta sembra essere una stringa JSON
+                if (headers("Content-Type") === "application/json" || headers("Content-Type") === "application/json;charset=utf-8") {
+            // Se la risposta è già in formato JSON, restituiscila così com'è
+                    var jsonString;
+                    var jsonObject;
+                    if(data === "OK"){
+                        jsonString = '{"risposta": "OK"}';
+                        jsonObject = JSON.parse(jsonString);
+                    }else if (data === "KO"){
+                        jsonString = '{"risposta": "KO"}';
+                        jsonObject = JSON.parse(jsonString);
+                    }
+                    
+                    return angular.fromJson(jsonObject);
+                } else {
+                // Se la risposta non sembra essere JSON, tenta di interpretarla come JSON
+                    try {
+                        return angular.fromJson(data);
+                    } catch (e) {
+                    // Se non è possibile interpretare la risposta come JSON, restituisci un errore
+                        throw new Error("Impossibile analizzare la risposta come JSON.");
+                }
+            }
+        }
     };
 
+    $http.post('http://192.168.1.228:8080/lavanderia/cliente/capo/' + $scope.idCliente, $scope.datiSenzaSelectedClient, config)
+    .then(function(response){
+        location.reload();
+        console.log('Capo inserito con successo')
+    }, function(error){
+        console.error('Caricamento del capo fallito: ', error);
+    });
+};
+
+
     $scope.aggiungiCapo = function(capoDto){
-        $scope.capi.push(angular.copy(capoDto));
+        if (Object.keys(capoDto).length >= 3){
+            $scope.capi.push(angular.copy(capoDto));
+            $scope.aggiungiCapoFlag = !$scope.aggiungiCapoFlag;
+        }
     };
+
+    $scope.preparazioneDelDato = function(){
+        $scope.idCliente = $scope.capi[0].selectedClient;
+        $scope.datiSenzaSelectedClient = $scope.capi.map(function(capo) {
+            return {
+                nomeCapo: capo.nomeCapo,
+                descrizione: capo.descrizione
+        };
+    });
+    };
+
+    $scope.aggiungiCliente = function(){
+        //Mettere gestione flag che andrà a palesare la form d'inseirmtno.
+    }
 });
 
