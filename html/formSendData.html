@@ -53,8 +53,13 @@
             <button type="submit" class="btn btn-primary" ng-disabled="aggiungiCapoFlag">Invia</button>
         </form>
     </div><br>
+        <div>
+        <tr ng-repeat="capo in formData" ng-show="formData !== null || formData !== undefined">
+            <td>{{capo.nomeCapo}} - {{capo.descrizione}}</td>
+        </tr>
+    </div>
     <div class="aggiungi-cliente-container">
-        <button type="button" class="btn btn-cliente" ng-click="aggiungiCliente()" ng-show="showForm">Inserisci Cliente</button>
+        <button type="button" class="btn btn-cliente" ng-click="mostraFormCliente()" ng-show="showForm">Inserisci Cliente</button>
     </div>
 </body>
 </html>

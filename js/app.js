@@ -11,6 +11,36 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     $scope.updateCliente = false;
     $scope.showRitiroCapi = false;
     $scope.aggiungiCapoFlag = true;
+    $scope.showFormCliente = false;
+
+
+    $scope.config = {
+            transformResponse: function(data, headers) {
+            // Verifica se la risposta sembra essere una stringa JSON
+                if (headers("Content-Type") === "application/json" || headers("Content-Type") === "application/json;charset=utf-8") {
+            // Se la risposta è già in formato JSON, restituiscila così com'è
+                    var jsonString;
+                    var jsonObject;
+                    if(data === "OK"){
+                        jsonString = '{"risposta": "OK"}';
+                        jsonObject = JSON.parse(jsonString);
+                    }else if (data === "KO"){
+                        jsonString = '{"risposta": "KO"}';
+                        jsonObject = JSON.parse(jsonString);
+                    }
+                    
+                    return angular.fromJson(jsonObject);
+                } else {
+                // Se la risposta non sembra essere JSON, tenta di interpretarla come JSON
+                    try {
+                        return angular.fromJson(data);
+                    } catch (e) {
+                    // Se non è possibile interpretare la risposta come JSON, restituisci un errore
+                        throw new Error("Impossibile analizzare la risposta come JSON.");
+                }
+            }
+        }
+    };
 
     $scope.getFlagForForm = function(){
         $scope.showForm = !$scope.showForm;
@@ -87,7 +117,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
 
     };
     $scope.getData = function() {
-        $http.get('http://192.168.1.228:8080/lavanderia/clienti')
+        $http.get('http://192.168.1.228:8080/lavanderia/clienti', $scope.config)
             .then(function(response) {
                 console.log('Data received:', response.data);
                 $scope.apiData = response.data;
@@ -107,7 +137,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     };
 
     $scope.getDataForPresaInCarico = function() {
-        $http.get('http://192.168.1.228:8080/lavanderia/clienti')
+        $http.get('http://192.168.1.228:8080/lavanderia/clienti', $scope.config)
             .then(function(response) {
                 console.log('Data received:', response.data);
                 $scope.datiClienti = response.data;
@@ -166,35 +196,8 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
 
     $scope.sendCapi = function(){
         $scope.preparazioneDelDato();
-        var config = {
-            transformResponse: function(data, headers) {
-            // Verifica se la risposta sembra essere una stringa JSON
-                if (headers("Content-Type") === "application/json" || headers("Content-Type") === "application/json;charset=utf-8") {
-            // Se la risposta è già in formato JSON, restituiscila così com'è
-                    var jsonString;
-                    var jsonObject;
-                    if(data === "OK"){
-                        jsonString = '{"risposta": "OK"}';
-                        jsonObject = JSON.parse(jsonString);
-                    }else if (data === "KO"){
-                        jsonString = '{"risposta": "KO"}';
-                        jsonObject = JSON.parse(jsonString);
-                    }
-                    
-                    return angular.fromJson(jsonObject);
-                } else {
-                // Se la risposta non sembra essere JSON, tenta di interpretarla come JSON
-                    try {
-                        return angular.fromJson(data);
-                    } catch (e) {
-                    // Se non è possibile interpretare la risposta come JSON, restituisci un errore
-                        throw new Error("Impossibile analizzare la risposta come JSON.");
-                }
-            }
-        }
-    };
 
-    $http.post('http://192.168.1.228:8080/lavanderia/cliente/capo/' + $scope.idCliente, $scope.datiSenzaSelectedClient, config)
+    $http.post('http://192.168.1.228:8080/lavanderia/cliente/capo/' + $scope.idCliente, $scope.datiSenzaSelectedClient, $scope.config)
     .then(function(response){
         location.reload();
         console.log('Capo inserito con successo')
@@ -221,8 +224,19 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     });
     };
 
-    $scope.aggiungiCliente = function(){
-        //Mettere gestione flag che andrà a palesare la form d'inseirmtno.
+    $scope.mostraFormCliente = function(){
+        $scope.showFormCliente = !$scope.showFormCliente;
+    }
+
+    $scope.aggiungiCliente = function(formCliente){
+
+        $http.post('http://192.168.1.228:8080/lavanderia/cliente', formCliente, config)
+        .then(function(response){
+            location.reload();
+            console.log('Cliente inserito con successo')
+        }, function(error){
+            console.error('Caricamento del cliente fallito: ', error);
+    });
     }
 });
 
