@@ -1,4 +1,5 @@
-  var app = angular.module('myApp', []);
+  var app = angular.module('myApp', [])
+
 
 app.controller('myController', function($scope, $rootScope, $http, $location) {
     $scope.formData = {};
@@ -12,35 +13,6 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     $scope.showRitiroCapi = false;
     $scope.aggiungiCapoFlag = true;
     $scope.showFormCliente = false;
-
-
-    $scope.config = {
-            transformResponse: function(data, headers) {
-            // Verifica se la risposta sembra essere una stringa JSON
-                if (headers("Content-Type") === "application/json" || headers("Content-Type") === "application/json;charset=utf-8") {
-            // Se la risposta è già in formato JSON, restituiscila così com'è
-                    var jsonString;
-                    var jsonObject;
-                    if(data === "OK"){
-                        jsonString = '{"risposta": "OK"}';
-                        jsonObject = JSON.parse(jsonString);
-                    }else if (data === "KO"){
-                        jsonString = '{"risposta": "KO"}';
-                        jsonObject = JSON.parse(jsonString);
-                    }
-                    
-                    return angular.fromJson(jsonObject);
-                } else {
-                // Se la risposta non sembra essere JSON, tenta di interpretarla come JSON
-                    try {
-                        return angular.fromJson(data);
-                    } catch (e) {
-                    // Se non è possibile interpretare la risposta come JSON, restituisci un errore
-                        throw new Error("Impossibile analizzare la risposta come JSON.");
-                }
-            }
-        }
-    };
 
     $scope.getFlagForForm = function(){
         $scope.showForm = !$scope.showForm;
@@ -77,7 +49,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     }
   };
     $scope.printEtichettaCliente = function(idCliente){
-        $http.get('http://192.168.1.228:8080/lavanderia/cliente?idCliente=' + idCliente)
+        $http.get('http://localhost:8080/lavanderia/cliente?idCliente=' + idCliente)
             .then(function(response){
                 console.log('Data received for print:', response.data);
                 $scope.nome=response.data[0].nome;
@@ -106,7 +78,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
             cognome:clienteDto.cognome, 
             indirizzo:clienteDto.indirizzo,
             numeroDiTelefono:clienteDto.numeroDiTelefono};
-            $http.put('http://192.168.1.228:8080/lavanderia/cliente/' + $rootScope.id, JSON.stringify(data))
+            $http.put('http://localhost:8080/lavanderia/cliente/' + $rootScope.id, JSON.stringify(data))
                 .then(function(response) {
                     console.log('Data received:', response.data);
                     $window.location.reload();
@@ -117,7 +89,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
 
     };
     $scope.getData = function() {
-        $http.get('http://192.168.1.228:8080/lavanderia/clienti', $scope.config)
+        $http.get('http://localhost:8080/lavanderia/clienti')
             .then(function(response) {
                 console.log('Data received:', response.data);
                 $scope.apiData = response.data;
@@ -137,7 +109,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     };
 
     $scope.getDataForPresaInCarico = function() {
-        $http.get('http://192.168.1.228:8080/lavanderia/clienti', $scope.config)
+        $http.get('http://localhost:8080/lavanderia/clienti')
             .then(function(response) {
                 console.log('Data received:', response.data);
                 $scope.datiClienti = response.data;
@@ -147,7 +119,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
             });
     };
     $scope.getCliente = function(idCliente, nome, cognome) {
-        $http.get('http://192.168.1.228:8080/lavanderia/cliente', {
+        $http.get('http://localhost:8080/lavanderia/cliente', {
             params:{
                 idCliente: idCliente,
                 nome: nome,
@@ -172,7 +144,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
             });
     };
     $scope.deleteData = function(id) {
-        $http.delete('http://192.168.1.228:8080/lavanderia/cliente/' + id)
+        $http.delete('http://localhost:8080/lavanderia/cliente/' + id)
         .then(function(response) {
             location.reload();
             console.log('Resource deleted successfully');
@@ -184,7 +156,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
 
 
     $scope.sendData = function() {
-        $http.post('http://192.168.1.228:8080/lavanderia/cliente', $scope.formData)
+        $http.post('http://localhost:8080/lavanderia/cliente', $scope.formData)
             .then(function(response) {
             console.log('Data sent successfully:', response.data);
             $window.location.reload();
@@ -197,7 +169,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     $scope.sendCapi = function(){
         $scope.preparazioneDelDato();
 
-    $http.post('http://192.168.1.228:8080/lavanderia/cliente/capo/' + $scope.idCliente, $scope.datiSenzaSelectedClient, $scope.config)
+    $http.post('http://localhost:8080/lavanderia/cliente/capo/' + $scope.idCliente, $scope.datiSenzaSelectedClient)
     .then(function(response){
         location.reload();
         console.log('Capo inserito con successo')
@@ -208,9 +180,12 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
 
 
     $scope.aggiungiCapo = function(capoDto){
-        if (Object.keys(capoDto).length >= 3){
+        if (Object.keys(capoDto).length >= 0){
             $scope.capi.push(angular.copy(capoDto));
-            $scope.aggiungiCapoFlag = !$scope.aggiungiCapoFlag;
+            if($scope.aggiungiCapoFlag){
+                $scope.aggiungiCapoFlag = !$scope.aggiungiCapoFlag;
+            }
+            
         }
     };
 
@@ -230,7 +205,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
 
     $scope.aggiungiCliente = function(formCliente){
 
-        $http.post('http://192.168.1.228:8080/lavanderia/cliente', formCliente, config)
+        $http.post('http://localhost:8080/lavanderia/cliente', formCliente)
         .then(function(response){
             location.reload();
             console.log('Cliente inserito con successo')
@@ -238,5 +213,10 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
             console.error('Caricamento del cliente fallito: ', error);
     });
     }
+
+    // Funzione per rimuovere un elemento
+    $scope.eliminaCapo = function(index) {
+        $scope.capi.splice(index, 1); // Rimuovi l'elemento dall'array
+    };
 });
 
