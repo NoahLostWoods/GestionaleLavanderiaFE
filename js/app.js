@@ -14,6 +14,10 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     $scope.aggiungiCapoFlag = true;
     $scope.showFormCliente = false;
 
+    //Nuovi flag da implementare
+    $scope.showPresaInCarico = true;
+    $scope.showRitiroCliente = true;
+
     $scope.getFlagForForm = function(){
         $scope.showForm = !$scope.showForm;
         if($scope.showClientiEmpty){
@@ -93,16 +97,9 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
             .then(function(response) {
                 console.log('Data received:', response.data);
                 $scope.apiData = response.data;
-                $scope.showClientiEmpty = !$scope.showClientiEmpty;
-                if($scope.showForm){
-                    $scope.showForm = !$scope.showForm;
-                }
-                if($scope.editDataFlag){
-                    $scope.editDataFlag = !$scope.editDataFlag;
-                }
-                if($scope.updateCliente){
-                    $scope.updateCliente = !$scope.updateCliente;
-                }
+                $scope.showRitiroCliente = !$scope.showRitiroCliente;
+                $scope.showPresaInCarico = !$scope.showPresaInCarico;
+                $scope.showRitiroCapi = !$scope.showRitiroCapi;
             }, function(error) {
                 console.error('Error fetching data:', error);
             });

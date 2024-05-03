@@ -22,8 +22,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <div class="center-screen">
-          <button ng-click="getData()" class="btn btn-outline-dark menu-btn btn-xl mr-2" id="ritiro-cliente-btn" ng-hide="showForm || apiData !== null && apiData.length > 0 && showClientiEmpty">Ritiro dal cliente</button>
-          <button ng-click="getFlagForForm()" class="btn btn-outline-dark menu-btn btn-xl" id="presa-in-carico-btn" ng-hide="showForm || apiData !== null && apiData.length > 0 && showClientiEmpty">Presa in carico</button>
+          <button ng-click="getData()" class="btn btn-outline-dark menu-btn btn-xl mr-2" id="ritiro-cliente-btn" ng-show="showRitiroCliente">Ritiro dal cliente</button>
+          <button ng-click="getFlagForForm()" class="btn btn-outline-dark menu-btn btn-xl" id="presa-in-carico-btn" ng-show="showPresaInCarico">Presa in carico</button>
         </div>
       </ul>
     </div>
