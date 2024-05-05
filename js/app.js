@@ -17,9 +17,12 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
     //Nuovi flag da implementare
     $scope.showPresaInCarico = true;
     $scope.showRitiroCliente = true;
+    $scope.showTableRitiro = false;
 
     $scope.getFlagForForm = function(){
         $scope.showForm = !$scope.showForm;
+        $scope.showPresaInCarico = !$scope.showPresaInCarico;
+        $scope.showRitiroCliente = !$scope.showRitiroCliente;
         if($scope.showClientiEmpty){
             $scope.showClientiEmpty = !$scope.showClientiEmpty;
         }
@@ -99,7 +102,7 @@ app.controller('myController', function($scope, $rootScope, $http, $location) {
                 $scope.apiData = response.data;
                 $scope.showRitiroCliente = !$scope.showRitiroCliente;
                 $scope.showPresaInCarico = !$scope.showPresaInCarico;
-                $scope.showRitiroCapi = !$scope.showRitiroCapi;
+                $scope.showTableRitiro = !$scope.showTableRitiro;
             }, function(error) {
                 console.error('Error fetching data:', error);
             });

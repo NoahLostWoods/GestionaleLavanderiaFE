@@ -47,13 +47,13 @@
 <body>
 
 <div class="search-container">
-  <div class="search-icon" ng-click="toggleSearch()" ng-show="apiData !== null && apiData.length > 0 && showClientiEmpty && !showRitiroCapi">
+  <div class="search-icon" ng-click="toggleSearch()" ng-show="showTableRitiro">
     <img src="../icons/search.ico" alt="Search Icon">
   </div>
   <input type="text" class="search-input" ng-model="searchText" placeholder="Cerca per nome...">
 </div>
 
-<table border="1" align="center" ng-show="apiData !== null && apiData.length > 0 && showClientiEmpty && !showRitiroCapi">
+<table border="1" align="center" ng-show="showTableRitiro">
   <thead>
     <tr>
       <th>ID</th>
